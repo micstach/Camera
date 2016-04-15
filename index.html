@@ -1,5 +1,12 @@
 <html>
+	<head>
+		<link href="camera.css" rel="stylesheet" type="text/css">
+		<script src="camera.js"></script>
+	</head>
 	<body>
-		<input type="file" accept="image/*;capture=camera">
+		<video id="video" width="320" height="240" autoplay></video>
+		<button id="snap">Snap Photo</button>
+		<canvas id="canvas" width="320" height="240"></canvas>
+		<a href="#" id="downloader" download="image.png">Download!</a>
 	</body>
 </html>
