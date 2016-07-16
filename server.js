@@ -47,7 +47,7 @@ webSocketServer.on('request', function(request) {
     connection.on('message', function(message) {
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
-          connection.sendUTF(message.utf8Data) ;
+          webSocketClients[i].sendUTF(message.utf8Data) ;
         }
       }
     });
