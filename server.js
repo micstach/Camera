@@ -55,11 +55,11 @@ webSocketServer.on('request', function(request) {
     });
 
     connection.on('close', function(connection) {
-      console.log('WebSocket connection closed');
+      console.log('WebSocket connection closed: ' + JSON.stringify(connection));
 
       var messageId = webSocketClients.indexOf(connection) ;
 
-      // send close message
+      // send close message to others
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
           webSocketClients[i].sendUTF(JSON.stringify({id: messageId, data: ""})) ;
