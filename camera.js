@@ -65,9 +65,8 @@ window.addEventListener("DOMContentLoaded", function() {
   };
 
   var connectionRecieveMessage = function(message) {
-  	console.log(message);
-  	
   	var messageData = JSON.parse(message.data)
+  	console.log("Message id:" + messageData.id);
 
   	var $output = $("#output");
 
