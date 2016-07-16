@@ -47,6 +47,7 @@ webSocketServer.on('request', function(request) {
     connection.on('message', function(message) {
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
+          console.log('Idx: ' + i);
           webSocketClients[i].sendUTF(JSON.stringify({id: i, data: message.utf8Data})) ;
         }
       }
