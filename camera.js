@@ -8,14 +8,12 @@ var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRa
 
 function convertFloat32ToInt16(buffer) {
   l = buffer.length;
-  buf = new Int16Array(l);
-  while (l >= 0) {
+  buf = new Int16Array(l/2);
+
+  for (var i=0; i<l; i+=2) {
     buf[l] = buffer[l] * 8000;
-    l--;
-    l--;
-    l--;
-    l--;
   }
+  
   return buf;
 }
 
