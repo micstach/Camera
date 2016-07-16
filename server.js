@@ -53,7 +53,8 @@ webSocketServer.on('request', function(request) {
     });
 
     connection.on('close', function(connection) {
-      console.log('WebSocket connection closed: '+JSON.stringify(connection));
+      console.log('WebSocket connection closed');
+      webSocketClients.splice(webSocketClients.indexOf(connection), 1);
     });
 
 });
