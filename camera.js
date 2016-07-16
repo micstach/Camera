@@ -52,8 +52,11 @@ window.addEventListener("DOMContentLoaded", function() {
 		canvas.getContext("2d").drawImage(video, 0, 0, 320, 240);
 
 		var imageData = canvas.toDataURL();
+		var noprefix = imageData.replace("data:image/png;base64,", "");
+		var unbased = atob(noprefix);
+		// var compressed = LZString.compress(unbased);
 
-    connection.send(LZString.compress(imageData.toString()));
+    connection.send(unbased);
 
 		setTimeout(captureImageLoop, 1000);
 	}
@@ -77,7 +80,9 @@ window.addEventListener("DOMContentLoaded", function() {
   	  $output.append($img);
 		} 
 
-		$("#video-" + messageData.id).attr('src', messageData.data);
+		// var decompressed = LZString.decompress(messageData.data);
+
+		$("#video-" + messageData.id).attr('src', "data:image/png;base64, " + btoa(messageData.data));
 		
   }
 
