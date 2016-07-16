@@ -13,8 +13,8 @@ window.addEventListener("DOMContentLoaded", function() {
 			console.log("Video capture error: ", error.code); 
 		};
 
-	canvas.getContext("2d").translate(160, 0);
-	canvas.getContext("2d").scale(-1, 1);
+	//canvas.getContext("2d").translate(160, 0);
+	//canvas.getContext("2d").scale(-1, 1);
 
 	// Put video listeners into place
 	if(navigator.getUserMedia) { // Standard
