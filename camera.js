@@ -80,10 +80,11 @@ window.addEventListener("DOMContentLoaded", function() {
   	  $output.append($img);
 		} 
 
-		// var decompressed = LZString.decompress(messageData.data);
-
-		$("#video-" + messageData.id).attr('src', "data:image/png;base64, " + btoa(messageData.data));
-		
+		if (messageData.data.length > 0) {
+			$("#video-" + messageData.id).attr('src', "data:image/png;base64, " + btoa(messageData.data));
+		} else {
+			$("#video-" + messageData.id).remove();
+		}
   }
 
   var connectionOpen = function() {

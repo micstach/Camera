@@ -46,7 +46,7 @@ webSocketServer.on('request', function(request) {
     // user sent some message
     connection.on('message', function(message) {
       var messageId = webSocketClients.indexOf(connection) ;
-      
+
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
           webSocketClients[i].sendUTF(JSON.stringify({id: messageId, data: message.utf8Data})) ;
@@ -56,6 +56,14 @@ webSocketServer.on('request', function(request) {
 
     connection.on('close', function(connection) {
       console.log('WebSocket connection closed');
+
+      // send close message
+      for (var i=0; i<webSocketClients.length; i++) {
+        if (connection !== webSocketClients[i]) {
+          webSocketClients[i].sendUTF(JSON.stringify({id: messageId, data: ""})) ;
+        }
+      }
+
       webSocketClients.splice(webSocketClients.indexOf(connection), 1);
     });
 
