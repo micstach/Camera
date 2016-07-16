@@ -9,6 +9,12 @@ body {
   -moz-transform:rotateY(180deg); /* Firefox */
   -webkit-filter: grayscale(1);
   box-shadow: 0px 0px 32px rgb(0,0,0);
+  opacity: 0.25;
+}
+
+#video:hover
+{
+  opacity: 1.0;
 }
 
 #data-size {

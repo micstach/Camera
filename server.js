@@ -49,7 +49,16 @@ webSocketServer.on('request', function(request) {
 
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
-          webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, data: message.utf8Data})) ;
+          var messageData = JSON.parse(message.utf8Data);
+
+          if (messageData.video){
+            webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, video: messageData.video})) ;
+          }
+
+          if (messageData.audio) {
+            console.log("audio length: " + messageData.audio.length);
+            webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, audio: messageData.audio})) ;
+          }
         }
       }
     });
@@ -60,7 +69,7 @@ webSocketServer.on('request', function(request) {
 
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
-          webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, data: ""})) ;
+          webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, video: ""})) ;
         }
       }
 
