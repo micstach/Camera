@@ -54,7 +54,6 @@ window.addEventListener("DOMContentLoaded", function() {
 		var imageData = canvas.toDataURL();
 		var noprefix = imageData.replace("data:image/png;base64,", "");
 		var unbased = atob(noprefix);
-		// var compressed = LZString.compress(unbased);
 
     connection.send(unbased);
 
