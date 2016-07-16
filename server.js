@@ -54,7 +54,7 @@ webSocketServer.on('request', function(request) {
       }
     });
 
-    connection.on('close', function(connection) {
+    connection.on('close', function() {
       console.log('WebSocket connection closed: ' + JSON.stringify(connection));
 
       var messageId = webSocketClients.indexOf(connection) ;
