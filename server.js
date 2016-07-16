@@ -45,26 +45,26 @@ webSocketServer.on('request', function(request) {
 
     // user sent some message
     connection.on('message', function(message) {
-      var messageId = webSocketClients.indexOf(connection) ;
+      var clientIdx = webSocketClients.indexOf(connection) ;
 
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
-          webSocketClients[i].sendUTF(JSON.stringify({id: messageId, data: message.utf8Data})) ;
+          webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, data: message.utf8Data})) ;
         }
       }
     });
 
     connection.on('close', function() {
-      var messageId = webSocketClients.indexOf(undefined) ;
 
-      // send close message to others
+      var clientIdx = webSocketClients.indexOf(connection) ;
+
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
-          webSocketClients[i].sendUTF(JSON.stringify({id: messageId, data: ""})) ;
+          webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, data: ""})) ;
         }
       }
 
-      webSocketClients.splice(messageId, 1);
+      webSocketClients.splice(clientIdx, 1);
     });
 
 });
