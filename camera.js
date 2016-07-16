@@ -8,7 +8,7 @@ function convertFloat32ToInt16(buffer) {
   l = buffer.length;
   buf = new Int16Array(l);
   while (l--) {
-    buf[l] = buffer[l] * 16000;
+    buf[l] = buffer[l] * 8000;
   }
   return buf;
 }
