@@ -36,7 +36,7 @@ window.addEventListener("DOMContentLoaded", function() {
 	}
 
 	var captureImageLoop = function() {
-		canvas.getContext("2d").drawImage(video, 0, 0, 160, 120);
+		canvas.getContext("2d").drawImage(video, 0, 0, 320, 240);
 
 		var imageData = canvas.toDataURL('image/jpeg');
 		var noprefix = imageData.replace("data:image/jpeg;base64,", "");
