@@ -1,6 +1,6 @@
 // initialize websocket connection
 var connection = null;
-var bufferSize = 4096;
+var bufferSize = 8192;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
 
