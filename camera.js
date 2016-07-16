@@ -141,15 +141,15 @@ window.addEventListener("DOMContentLoaded", function() {
 			var buf = messageData.audio.split(',');
 			var audioFrame = convertInt16ToFloat32(buf);
 
-			// var channelData = arrayBuffer.getChannelData(0);
-			// for (var i=0; i<audioFrame.length; i++) {
-			// 	channelData[i] = audioFrame[i];
-			// }
+			var channelData = arrayBuffer.getChannelData(0);
+			for (var i=0; i<audioFrame.length; i++) {
+				channelData[i] = audioFrame[i];
+			}
 
-      //var source = audioContext.createBufferSource();
-      //source.buffer = arrayBuffer;
-      //source.connect(audioContext.destination);
-      //source.start(0);
+      var source = audioContext.createBufferSource();
+      source.buffer = arrayBuffer;
+      source.connect(audioContext.destination);
+      source.start(0);
   	}
   }
 
