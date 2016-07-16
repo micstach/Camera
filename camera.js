@@ -17,7 +17,7 @@ function convertInt16ToFloat32(buffer) {
   l = buffer.length;
   buf = new Float32Array(l);
   while (l--) {
-    buf[l] = parseFloat(buffer[l]) / 4096.0;
+    buf[l] = parseFloat(buffer[l]) / 8096.0;
   }
   return buf;
 }
@@ -33,6 +33,8 @@ function recorderProcess(e) {
 
 function initializeRecorder(stream) {
   video.src = window.URL.createObjectURL(stream);
+  video.play();
+  video.volume = 0.0;
 
 	var audioInput = audioContext.createMediaStreamSource(stream);
   var gainNode = audioContext.createGain();
@@ -45,6 +47,7 @@ function initializeRecorder(stream) {
   audioInput.connect(gainNode);
   gainNode.connect(recorder);
   recorder.connect(audioContext.destination);
+
 }
 
 function onError(err) {
@@ -138,15 +141,15 @@ window.addEventListener("DOMContentLoaded", function() {
 			var buf = messageData.audio.split(',');
 			var audioFrame = convertInt16ToFloat32(buf);
 
-			var channelData = arrayBuffer.getChannelData(0);
-			for (var i=0; i<audioFrame.length; i++) {
-				channelData[i] = audioFrame[i];
-			}
+			// var channelData = arrayBuffer.getChannelData(0);
+			// for (var i=0; i<audioFrame.length; i++) {
+			// 	channelData[i] = audioFrame[i];
+			// }
 
-      var source = audioContext.createBufferSource();
-      source.buffer = arrayBuffer;
-      source.connect(audioContext.destination);
-      source.start(0);
+      //var source = audioContext.createBufferSource();
+      //source.buffer = arrayBuffer;
+      //source.connect(audioContext.destination);
+      //source.start(0);
   	}
   }
 
