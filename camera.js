@@ -1,3 +1,7 @@
+// initialize websocket connection
+var webSocketServer = 'ws://localhost:80';
+var connection = null;
+
 // Put event listeners into place
 window.addEventListener("DOMContentLoaded", function() {
 	
@@ -32,13 +36,48 @@ window.addEventListener("DOMContentLoaded", function() {
 		}, errBack);
 	}
 
-	// Trigger photo take
-	document.getElementById("snap").addEventListener("click", function() {
-		var canvas = document.getElementById("canvas") ;
+	function ab2str(buf) {
+	  return String.fromCharCode.apply(null, new Uint16Array(buf));
+	}
 
+	function str2ab(str) {
+	  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+	  var bufView = new Uint16Array(buf);
+	  for (var i=0, strLen=str.length; i<strLen; i++) {
+	    bufView[i] = str.charCodeAt(i);
+	  }
+	  return buf;
+	}
+
+	var captureImageLoop = function() {
 		canvas.getContext("2d").drawImage(video, 0, 0, 320, 240);
-    	document.getElementById("downloader").download = "image.png";
-    	document.getElementById("downloader").href = canvas.toDataURL();	
-	});
+
+		var imageData = canvas.toDataURL();
+
+    connection.send(imageData);
+
+		setTimeout(captureImageLoop, 330);
+	}
+
+  var initializeConnection = function() {
+      connection = new WebSocket(webSocketServer);
+      connection.binaryType = "arraybuffer";
+      connection.onopen = connectionOpen;
+      connection.onmessage = connectionRecieveMessage;
+  };
+
+  var connectionRecieveMessage = function(message) {
+  	var $output = $("#output");
+    var img = document.createElement("img");
+    img.src = message.data;
+    $output.html(img);
+  }
+
+  var connectionOpen = function() {
+  	console.log("Connection with server established");
+  	captureImageLoop();
+  }
+
+  initializeConnection();
 
 }, false);
