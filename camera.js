@@ -4,7 +4,7 @@ var connection = null;
 // audio context
 var bufferSize = 4096;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/2);
+var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
 
 function convertFloat32ToInt16(buffer) {
   l = buffer.length;
