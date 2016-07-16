@@ -1,5 +1,4 @@
 // initialize websocket connection
-var webSocketServer = 'wss://micstach-2do.herokuapp.com';
 var connection = null;
 
 // Put event listeners into place

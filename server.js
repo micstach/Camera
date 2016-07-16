@@ -1,12 +1,24 @@
+var port = process.env.PORT || 80;
+
 var express = require('express');
 var http = require('http');
 var websocket = require('websocket');
 
 var app = express() ;
 
-app.use(express.static(__dirname + '/'));
 
-var port = process.env.PORT || 80;
+app.set('views', __dirname + '/views');  
+app.set('view engine', 'ejs');  
+
+app.use(express.static(__dirname));
+
+app.get('/', function(req, res){
+  var wsUrl = 'ws://localhost';
+  if (process.env.PORT) {
+    wsUrl = 'wss://micstach-2do.herokuapp.com';
+  }
+  res.render('index', {webSocketUrl: wsUrl});
+});
 
 var httpServer = http.createServer(app) ;
 httpServer.listen(port);
@@ -33,7 +45,11 @@ webSocketServer.on('request', function(request) {
 
     // user sent some message
     connection.on('message', function(message) {
-      connection.sendUTF(message.utf8Data) ;
+      for (var i=0; i<webSocketClients.length; i++) {
+        if (connection !== webSocketClients[i]) {
+          connection.sendUTF(message.utf8Data) ;
+        }
+      }
     });
 
     connection.on('close', function(connection) {

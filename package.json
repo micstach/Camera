@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "connect": "*",
+    "ejs": "^2.4.2",
     "express": "^4.14.0",
     "serve-static": "*",
     "websocket": "^1.0.23"
