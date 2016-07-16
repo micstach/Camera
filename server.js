@@ -55,9 +55,7 @@ webSocketServer.on('request', function(request) {
     });
 
     connection.on('close', function() {
-      console.log('WebSocket connection closed: ' + JSON.stringify(connection));
-
-      var messageId = webSocketClients.indexOf(connection) ;
+      var messageId = webSocketClients.indexOf(undefined) ;
 
       // send close message to others
       for (var i=0; i<webSocketClients.length; i++) {
@@ -66,7 +64,7 @@ webSocketServer.on('request', function(request) {
         }
       }
 
-      webSocketClients.splice(webSocketClients.indexOf(connection), 1);
+      webSocketClients.splice(messageId, 1);
     });
 
 });
