@@ -2,7 +2,7 @@
 var connection = null;
 
 // audio context
-var bufferSize = 8192;
+var bufferSize = 2048;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
 
