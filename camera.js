@@ -49,7 +49,7 @@ window.addEventListener("DOMContentLoaded", function() {
 	}
 
 	var captureImageLoop = function() {
-		canvas.getContext("2d").drawImage(video, 0, 0, 320, 240);
+		canvas.getContext("2d").drawImage(video, 0, 0, 160, 120);
 
 		var imageData = canvas.toDataURL();
 		var noprefix = imageData.replace("data:image/png;base64,", "");
