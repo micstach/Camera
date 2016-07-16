@@ -1,0 +1,18 @@
+{
+  "name": "Camera",
+  "description": "",
+  "main": "Camera.js",
+  "authors": [
+    "micstach <micstach@poczta.onet.pl>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/micstach/Camera",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

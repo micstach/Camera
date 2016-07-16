@@ -53,7 +53,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
 		var imageData = canvas.toDataURL();
 
-    connection.send(imageData);
+    connection.send(LZString.compress(imageData));
 
 		setTimeout(captureImageLoop, 1000);
 	}
@@ -77,7 +77,7 @@ window.addEventListener("DOMContentLoaded", function() {
   	  $output.append($img);
 		} 
 
-		$("#video-" + messageData.id).attr('src', messageData.data);
+		$("#video-" + messageData.id).attr('src', LZString.decompress(messageData.data));
 		
   }
 
