@@ -38,7 +38,7 @@ window.addEventListener("DOMContentLoaded", function() {
 	var captureImageLoop = function() {
 		canvas.getContext("2d").drawImage(video, 0, 0, 320, 240);
 
-		var imageData = canvas.toDataURL('image/jpeg', 0.5);
+		var imageData = canvas.toDataURL('image/jpeg', 0.25);
 		var noprefix = imageData.replace("data:image/jpeg;base64,", "");
 		var unbased = atob(noprefix);
 
