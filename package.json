@@ -8,6 +8,6 @@
     "websocket": "^1.0.23"
   },
   "scripts": {
-      "postinstall": "./node_modules/bower/bin/bower install"
-  }  
+    "postinstall": "./node_modules/bower/bin/bower install"
+  }
 }
