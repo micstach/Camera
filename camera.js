@@ -74,7 +74,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
   	var videoMessage = $("#video-" + messageData.id);
   	if (videoMessage.length === 0) {
-	    var $img = $('<img width="320" height="240"></img>');
+	    var $img = $('<img width="640" height="480"></img>');
 	    $img.attr('id', "video-" + messageData.id);
   	  $output.append($img);
 		} 

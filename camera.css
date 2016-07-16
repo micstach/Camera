@@ -1,7 +1,20 @@
+body {
+  background-color: rgb(32, 32, 32);
+}
+
 #video
 {
-    transform: rotateY(180deg);
-    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-    -moz-transform:rotateY(180deg); /* Firefox */
-    -webkit-filter: grayscale(1);
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+  -moz-transform:rotateY(180deg); /* Firefox */
+  -webkit-filter: grayscale(1);
+  box-shadow: 0px 0px 32px rgb(0,0,0);
+}
+
+#output {
+  position: absolute;
+  left: calc(50% - 320px);
+  top: calc(50% - 240px);
+  z-index: -1;
+  box-shadow: 0px 0px 32px rgb(0,0,0);
 }
