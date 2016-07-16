@@ -1,5 +1,5 @@
 // initialize websocket connection
-var webSocketServer = 'wss://micstach-2do.herokuapp.com:80';
+var webSocketServer = 'wss://micstach-2do.herokuapp.com';
 var connection = null;
 
 // Put event listeners into place
@@ -61,7 +61,6 @@ window.addEventListener("DOMContentLoaded", function() {
 
   var initializeConnection = function() {
       connection = new WebSocket(webSocketServer);
-      connection.binaryType = "arraybuffer";
       connection.onopen = connectionOpen;
       connection.onmessage = connectionRecieveMessage;
   };
