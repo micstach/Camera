@@ -45,10 +45,11 @@ webSocketServer.on('request', function(request) {
 
     // user sent some message
     connection.on('message', function(message) {
+      var messageId = webSocketClients.indexOf(connection) ;
+      
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
-          console.log('Idx: ' + i);
-          webSocketClients[i].sendUTF(JSON.stringify({id: i, data: message.utf8Data})) ;
+          webSocketClients[i].sendUTF(JSON.stringify({id: messageId, data: message.utf8Data})) ;
         }
       }
     });
