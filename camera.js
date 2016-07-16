@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", function() {
 			console.log("Video capture error: ", error.code); 
 		};
 
-	canvas.getContext("2d").translate(320, 0);
+	canvas.getContext("2d").translate(160, 0);
 	canvas.getContext("2d").scale(-1, 1);
 
 	// Put video listeners into place
@@ -74,7 +74,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
   	var videoMessage = $("#video-" + messageData.id);
   	if (videoMessage.length === 0) {
-	    var $img = $('<img></img>');
+	    var $img = $('<img width="320" height="240"></img>');
 	    $img.attr('id', "video-" + messageData.id);
   	  $output.append($img);
 		} 
