@@ -1,13 +1,14 @@
 // initialize websocket connection
 var connection = null;
-
-var playAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+var bufferSize = 1024;
+var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
 
 function convertFloat32ToInt16(buffer) {
   l = buffer.length;
   buf = new Int16Array(l);
   while (l--) {
-    buf[l] = Math.min(1, buffer[l])*0x7FFF;
+    buf[l] = Math.min(1, buffer[l]) * 4096;
   }
   return buf;
 }
@@ -16,7 +17,7 @@ function convertInt16ToFloat32(buffer) {
   l = buffer.length;
   buf = new Float32Array(l);
   while (l--) {
-    buf[l] = parseFloat(buffer[l]) / 0x7FFF;
+    buf[l] = parseFloat(buffer[l]) / 4096.0;
   }
   return buf;
 }
@@ -26,22 +27,24 @@ function recorderProcess(e) {
   var buf = convertFloat32ToInt16(left);
   var text = buf.join(',');
   var data = JSON.stringify({audio: text});
+  
   connection.send(data);
 }
 
 function initializeRecorder(stream) {
-  var audioContext = window.AudioContext || window.webkitAudioContext ;
-  var context = new audioContext();
-  var audioInput = context.createMediaStreamSource(stream);
-  var bufferSize = 2048;
+  video.src = window.URL.createObjectURL(stream);
+
+	var audioInput = audioContext.createMediaStreamSource(stream);
+  var gainNode = audioContext.createGain();
+
   // create a javascript node
-  var recorder = context.createScriptProcessor(bufferSize, 1, 1);
+  var recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
   // specify the processing function
   recorder.onaudioprocess = recorderProcess;
   // connect stream to our recorder
-  audioInput.connect(recorder);
-  // connect our recorder to the previous destination
-  recorder.connect(context.destination);
+  audioInput.connect(gainNode);
+  gainNode.connect(recorder);
+  recorder.connect(audioContext.destination);
 }
 
 function onError(err) {
@@ -74,15 +77,14 @@ window.addEventListener("DOMContentLoaded", function() {
 			video.play();
 		}, errBack);
 	} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-		navigator.webkitGetUserMedia(videoObj, function(stream){
-			video.src = window.URL.createObjectURL(stream);
-		}, errBack);
+		// navigator.webkitGetUserMedia(videoObj, function(stream){
+		// 	video.src = window.URL.createObjectURL(stream);
+		// }, errBack);
 
 		var session = {
 		  audio: true,
-		  video: false
+		  video: true
 		};
-		var recordRTC = null;
 		navigator.webkitGetUserMedia(session, initializeRecorder, onError);
 	}
 	else if(navigator.mozGetUserMedia) { // Firefox-prefixed
@@ -136,31 +138,15 @@ window.addEventListener("DOMContentLoaded", function() {
 			var buf = messageData.audio.split(',');
 			var audioFrame = convertInt16ToFloat32(buf);
 
-		  var bufferSize = 2048;
-		  // create a javascript node
-		  //var recorder = playAudioContext.createScriptProcessor(bufferSize, 0, 1);
-			var arrayBuffer = playAudioContext.createBuffer(1, 2048, playAudioContext.sampleRate);
 			var channelData = arrayBuffer.getChannelData(0);
 			for (var i=0; i<audioFrame.length; i++) {
 				channelData[i] = audioFrame[i];
 			}
 
-		  // Get an AudioBufferSourceNode.
-		  // This is the AudioNode to use when we want to play an AudioBuffer
-
-		  // set the buffer in the AudioBufferSourceNode
-			var source = playAudioContext.createBufferSource();
-		  if (!source.buffer)
-		  {
-		  	source.buffer = arrayBuffer;
-
-			  // connect the AudioBufferSourceNode to the
-			  // destination so we can hear the sound
-			  source.connect(playAudioContext.destination);
-
-			  // start the source playing
-			  source.start();
-			}
+      var source = audioContext.createBufferSource();
+      source.buffer = arrayBuffer;
+      source.connect(audioContext.destination);
+      source.start(0);
   	}
   }
 
