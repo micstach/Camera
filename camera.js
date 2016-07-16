@@ -66,10 +66,20 @@ window.addEventListener("DOMContentLoaded", function() {
 
   var connectionRecieveMessage = function(message) {
   	console.log(message);
+  	
+  	var messageData = JSON.parse(message.data)
+
   	var $output = $("#output");
-    var img = document.createElement("img");
-    img.src = JSON.parse(message.data).data;
-    $output.html(img);
+
+  	var videoMessage = $("#video-" + messageData.id);
+  	if (videoMessage.length === 0) {
+	    var $img = $('<img></img>');
+	    $img.attr('id', "video-" + messageData.id);
+  	  $output.append($img);
+		} 
+
+		$("#video-" + messageData.id).attr('src', messageData.data);
+		
   }
 
   var connectionOpen = function() {
