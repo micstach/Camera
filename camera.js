@@ -57,7 +57,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
     connection.send(unbased);
 
-		setTimeout(captureImageLoop, 1000);
+		setTimeout(captureImageLoop, 250);
 	}
 
   var initializeConnection = function() {
