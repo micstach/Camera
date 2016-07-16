@@ -65,9 +65,10 @@ window.addEventListener("DOMContentLoaded", function() {
   };
 
   var connectionRecieveMessage = function(message) {
+  	console.log(message);
   	var $output = $("#output");
     var img = document.createElement("img");
-    img.src = message.data;
+    img.src = JSON.parse(message.data).data;
     $output.html(img);
   }
 
