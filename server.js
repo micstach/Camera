@@ -45,11 +45,9 @@ webSocketServer.on('request', function(request) {
 
     // user sent some message
     connection.on('message', function(message) {
-      var idx = 0;
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
-          webSocketClients[i].sendUTF(JSON.stringify({id: idx, data: message.utf8Data})) ;
-          idx++;
+          webSocketClients[i].sendUTF(JSON.stringify({id: i, data: message.utf8Data})) ;
         }
       }
     });
