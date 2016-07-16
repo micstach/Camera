@@ -1,6 +1,6 @@
 // initialize websocket connection
 var connection = null;
-var bufferSize = 2048;
+var bufferSize = 512;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
 
@@ -79,10 +79,6 @@ window.addEventListener("DOMContentLoaded", function() {
 			video.play();
 		}, errBack);
 	} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-		// navigator.webkitGetUserMedia(videoObj, function(stream){
-		// 	video.src = window.URL.createObjectURL(stream);
-		// }, errBack);
-
 		var session = {
 		  audio: true,
 		  video: true

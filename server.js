@@ -56,7 +56,6 @@ webSocketServer.on('request', function(request) {
           }
 
           if (messageData.audio) {
-            //console.log("audio length: " + messageData.audio.length);
             webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, audio: messageData.audio})) ;
           }
         }
