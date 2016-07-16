@@ -1,6 +1,6 @@
 // initialize websocket connection
 var connection = null;
-var bufferSize = 1024;
+var bufferSize = 2048;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
 
@@ -47,7 +47,6 @@ function initializeRecorder(stream) {
   audioInput.connect(gainNode);
   gainNode.connect(recorder);
   recorder.connect(audioContext.destination);
-
 }
 
 function onError(err) {
