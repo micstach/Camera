@@ -12,6 +12,9 @@ function convertFloat32ToInt16(buffer) {
   while (l--) {
     buf[l] = buffer[l] * 8000;
     l--;
+    l--;
+    l--;
+    l--;
   }
   return buf;
 }
