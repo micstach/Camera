@@ -1,6 +1,6 @@
 // initialize websocket connection
 var connection = null;
-var bufferSize = 4092;
+var bufferSize = 4096;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
 
@@ -8,7 +8,7 @@ function convertFloat32ToInt16(buffer) {
   l = buffer.length;
   buf = new Int16Array(l);
   while (l--) {
-    buf[l] = buffer[l] * 32000;
+    buf[l] =buffer[l] * 32000;
   }
   return buf;
 }
