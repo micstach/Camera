@@ -57,6 +57,8 @@ webSocketServer.on('request', function(request) {
     connection.on('close', function(connection) {
       console.log('WebSocket connection closed');
 
+      var messageId = webSocketClients.indexOf(connection) ;
+
       // send close message
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
