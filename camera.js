@@ -21,7 +21,7 @@ var playSound = function() {
 
   if (!buf) return ;
   
-  var audioFrame = convertInt16ToFloat32(buf.join(','));
+  var audioFrame = convertInt16ToFloat32(buf.split(','));
   
   var channelData = arrayBuffer.getChannelData(0);
   
