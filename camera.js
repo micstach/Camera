@@ -17,11 +17,11 @@ var playing = false ;
 var playSound = function() {
   if (playing) return ;
 
-  var buf = soundBuffer.shift().split(',');
+  var buf = soundBuffer.shift();
 
   if (!buf) return ;
   
-  var audioFrame = convertInt16ToFloat32(buf);
+  var audioFrame = convertInt16ToFloat32(buf.split(','));
   
   var channelData = arrayBuffer.getChannelData(0);
   
@@ -41,11 +41,9 @@ var playSound = function() {
   source.onended = function(){
     playing = false;
     playSound() ;
-    playing = false;
   };
   playing = true;
   source.start();
-  playing = false;
 }
 
 function convertFloat32ToInt16(buffer) {
