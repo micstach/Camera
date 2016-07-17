@@ -17,7 +17,7 @@ var playing = false ;
 var playSound = function() {
   if (playing) return ;
 
-  var buf = soundBuffer.shift();
+  var buf = soundBuffer.shift().split(',');
 
   if (!buf) return ;
   
