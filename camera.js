@@ -168,7 +168,7 @@ window.addEventListener("DOMContentLoaded", function() {
         //}
         recorder.connect(audioContext.destination);
       };
-      source.start(0);
+      source.start();
     }
   }
 
