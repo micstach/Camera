@@ -2,10 +2,10 @@
 var connection = null;
 
 // audio context
-var bufferSize = 2048;
+var bufferSize = 4096;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-var scale = 1 ;
+var scale = 2 ;
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/scale);
 var micGain = null ;
 var recorder ;
