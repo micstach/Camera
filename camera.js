@@ -13,7 +13,7 @@ var soundBuffer = [] ;
 var playing = false ;
 
 var playSound = function() {
-  if (playing) return ;
+  //if (playing) return ;
 
   var buf = soundBuffer.join(',');
   soundBuffer = [];
@@ -37,7 +37,7 @@ var playSound = function() {
     playing = false;
   };
 
-  playing = true;
+  //playing = true;
   source.start(0);
 }
 
