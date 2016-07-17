@@ -63,6 +63,8 @@ function convertInt16ToFloat32(buffer) {
 }
 
 function recorderProcess(e) {
+  if (playing) return ;
+  
   var left = e.inputBuffer.getChannelData(0);
 
   var intArr = convertFloat32ToInt16(left);
