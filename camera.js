@@ -4,13 +4,15 @@ var connection = null;
 // audio context
 var bufferSize = 4096;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/2);
+
+var scale = 1 ;
+var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/scale);
 
 function convertFloat32ToInt16(buffer) {
   l = buffer.length;
-  buf = new Int16Array(l/2);
+  buf = new Int16Array(l/scale);
   var k=0;
-  for (var i=0; i<l; i+=2) {
+  for (var i=0; i<l; i+=scale) {
     buf[k] = buffer[i] * 8000;
     k++;
   }
@@ -32,11 +34,10 @@ function recorderProcess(e) {
   var buf = convertFloat32ToInt16(left);
   var text = buf.join(',');
   
-  $('#data-audio-size').text(text.length);
-
   var data = JSON.stringify({audio: text});
-  
   connection.send(data);
+
+  $('#data-audio-size').text(text.length);
 }
 
 function initializeRecorder(stream) {
