@@ -40,7 +40,7 @@ var playSound = function() {
   //}
   source.onended = function(){
     playing = false;
-    playSound() ;
+    //playSound() ;
   };
   playing = true;
   source.start();
