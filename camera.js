@@ -53,8 +53,8 @@ function initializeRecorder(stream) {
   // specify the processing function
   recorder.onaudioprocess = recorderProcess;
   // connect stream to our recorder
-  audioInput.connect(gainNode);
-  gainNode.connect(recorder);
+  audioInput.connect(recorder);
+  //gainNode.connect(recorder);
   recorder.connect(audioContext.destination);
 }
 
