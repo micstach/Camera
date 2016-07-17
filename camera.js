@@ -2,7 +2,7 @@
 var connection = null;
 
 // audio context
-var bufferSize = 2048;
+var bufferSize = 1024;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 var scale = 1 ;
@@ -64,7 +64,7 @@ function convertInt16ToFloat32(buffer) {
 
 function recorderProcess(e) {
   if (playing) return ;
-  
+
   var left = e.inputBuffer.getChannelData(0);
 
   var intArr = convertFloat32ToInt16(left);
