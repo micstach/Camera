@@ -26,7 +26,7 @@ function convertInt16ToFloat32(buffer) {
   l = buffer.length;
   buf = new Float32Array(l);
   while (l--) {
-    buf[l] = parseFloat(buffer[l]) / 512.0 ;
+    buf[l] = parseFloat(buffer[l]) / 4096.0 ;
   }
   return buf;
 }
