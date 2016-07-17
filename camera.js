@@ -156,7 +156,7 @@ window.addEventListener("DOMContentLoaded", function() {
       var source = audioContext.createBufferSource();
       source.buffer = arrayBuffer;
       
-      recorder.disonnect(0);//audioContext.destination);
+      //recorder.disonnect(0);//audioContext.destination);
 
       source.connect(audioContext.destination);
       //if (micGain) {
@@ -166,7 +166,7 @@ window.addEventListener("DOMContentLoaded", function() {
         //if (micGain) {
           //micGain.gain.value = 0.5;
         //}
-        recorder.connect(audioContext.destination);
+        //recorder.connect(audioContext.destination);
       };
       source.start();
     }
