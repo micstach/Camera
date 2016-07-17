@@ -127,16 +127,17 @@ window.addEventListener("DOMContentLoaded", function() {
 
 
 		if (messageData.video) {
-      var $output = $("#output");
 
-      var videoMessage = $("#video-" + messageData.id);
-      if (videoMessage.length === 0) {
-        var $img = $('<img width="960" height="720"></img>');
-        $img.attr('id', "video-" + messageData.id);
-        $output.append($img);
-      } 
-      
 			if (messageData.video.length > 0) {
+        var $output = $("#output");
+
+        var videoMessage = $("#video-" + messageData.id);
+        if (videoMessage.length === 0) {
+          var $img = $('<img width="960" height="720"></img>');
+          $img.attr('id', "video-" + messageData.id);
+          $output.append($img);
+        } 
+
 				$("#video-" + messageData.id).attr('src', "data:image/jpeg;base64, " + btoa(messageData.video));
 			} else {
 				$("#video-" + messageData.id).remove();
