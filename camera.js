@@ -46,7 +46,7 @@ function convertFloat32ToInt16(buffer) {
   buf = new Int16Array(l/scale);
   var k=0;
   for (var i=0; i<l; i+=scale) {
-    buf[k] = Math.min(1, buffer[i]) * 0x7FFF;
+    buf[k] = Math.min(1, buffer[i]) * 8192;
     k++;
   }
 
@@ -57,21 +57,35 @@ function convertInt16ToFloat32(buffer) {
   l = buffer.length;
   buf = new Float32Array(l);
   while (l--) {
-    buf[l] = parseFloat(buffer[l]) / 0x7FFF ;
+    buf[l] = parseFloat(buffer[l]) / 8192;
   }
   return buf;
 }
 
 function recorderProcess(e) {
   var left = e.inputBuffer.getChannelData(0);
-  
-  var data = {
-    audio: convertFloat32ToInt16(left).join(',')
-  };
 
-  connection.send(JSON.stringify(data));
+  var intArr = convertFloat32ToInt16(left);
 
-  $('#data-audio-size').text(data.audio.length);
+  var send = false ;
+  for (var i=0; i<intArr.length; i++) {
+    send = (intArr[i] > 0) ;
+
+    if (send) {
+      break;
+    }
+  }
+
+  if (send) {
+    var data = {
+      audio: intArr.join(',')
+    };
+    connection.send(JSON.stringify(data));
+    $('#data-audio-size').text(data.audio.length);
+    
+  } else {
+    $('#data-audio-size').text('');
+  }
 }
 
 function initializeRecorder(stream) {
