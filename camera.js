@@ -51,7 +51,7 @@ function initializeRecorder(stream) {
   var audioInput = audioContext.createMediaStreamSource(stream);
   micGain = audioContext.createGain();
   micGain.gain.value = 0.5;
-  micGain.gain.volume = 0.5;
+  //micGain.gain.volume = 0.5;
   // create a javascript node
   recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
   // specify the processing function
@@ -152,13 +152,13 @@ window.addEventListener("DOMContentLoaded", function() {
       source.connect(audioContext.destination);
       if (micGain) {
         micGain.gain.volume = 0;
-        micGain.gain.value = 0;
+        //micGain.gain.value = 0;
         //recorder.disconnect(0);
       }
       source.onended = function(){
         if (micGain)
           micGain.gain.volume = 0.5;
-          micGain.gain.value = 0.5;
+          //micGain.gain.value = 0.5;
           //recorder.connect(audioContext.destination);
       };
       source.start(0);
