@@ -152,12 +152,13 @@ window.addEventListener("DOMContentLoaded", function() {
       var source = audioContext.createBufferSource();
       source.buffer = arrayBuffer;
       source.connect(audioContext.destination);
-      if (micGain) {
+      //if (micGain) {
         //micGain.gain.value = 0;
-      }
+      //}
       source.onended = function(){
-        if (micGain)
+        //if (micGain) {
           //micGain.gain.value = 0.5;
+        //}
       };
       source.start(0);
     }
