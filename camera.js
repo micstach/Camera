@@ -69,7 +69,7 @@ function recorderProcess(e) {
 
   var send = false ;
   for (var i=0; i<intArr.length; i++) {
-    send = (intArr[i] > 0) ;
+    send = (intArr[i] > 1024) ;
 
     if (send) {
       break;
