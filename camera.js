@@ -5,7 +5,7 @@ var connection = null;
 var bufferSize = 1024;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-var scale = 1 ;
+var scale = 2 ;
 var micGain = null ;
 var recorder ;
 
@@ -46,7 +46,7 @@ function convertFloat32ToInt16(buffer) {
   buf = new Int16Array(l/scale);
   var k=0;
   for (var i=0; i<l; i+=scale) {
-    buf[k] = buffer[i] * 512;
+    buf[k] = buffer[i] * 8192;
     k++;
   }
 
@@ -80,18 +80,14 @@ function initializeRecorder(stream) {
   video.play();
 
   var audioInput = audioContext.createMediaStreamSource(stream);
-  micGain = audioContext.createGain();
-  //micGain.gain.value = 0.5;
+  var biquadFilter = audioContext.createBiquadFilter();
   
-  // create a javascript node
   recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
   
-  // specify the processing function
   recorder.onaudioprocess = recorderProcess;
   
-  // connect stream to our recorder
-  audioInput.connect(micGain);
-  micGain.connect(recorder);
+  audioInput.connect(biquadFilter);
+  biquadFilter.connect(recorder);
   recorder.connect(audioContext.destination);
 }
 
