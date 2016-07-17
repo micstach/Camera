@@ -124,18 +124,18 @@ window.addEventListener("DOMContentLoaded", function() {
 
   var connectionRecieveMessage = function(message) {
   	var messageData = JSON.parse(message.data);
-  	console.log("Message id:" + messageData.id);
 
-  	var $output = $("#output");
-
-  	var videoMessage = $("#video-" + messageData.id);
-  	if (videoMessage.length === 0) {
-	    var $img = $('<img width="960" height="720"></img>');
-	    $img.attr('id', "video-" + messageData.id);
-  	  $output.append($img);
-		} 
 
 		if (messageData.video) {
+      var $output = $("#output");
+
+      var videoMessage = $("#video-" + messageData.id);
+      if (videoMessage.length === 0) {
+        var $img = $('<img width="960" height="720"></img>');
+        $img.attr('id', "video-" + messageData.id);
+        $output.append($img);
+      } 
+      
 			if (messageData.video.length > 0) {
 				$("#video-" + messageData.id).attr('src', "data:image/jpeg;base64, " + btoa(messageData.video));
 			} else {
