@@ -2,7 +2,7 @@
 var connection = null;
 
 // audio context
-var bufferSize = 1024;
+var bufferSize = 2048;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 var scale = 1 ;
@@ -69,7 +69,7 @@ function recorderProcess(e) {
 
   var send = false ;
   for (var i=0; i<intArr.length; i++) {
-    send = (intArr[i] > 1024) ;
+    send = (intArr[i] > 0) ;
 
     if (send) {
       break;
