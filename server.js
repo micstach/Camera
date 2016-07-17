@@ -15,7 +15,7 @@ app.use(express.static(__dirname));
 app.get('/', function(req, res){
   var wsUrl = 'ws://localhost';
   if (process.env.PORT) {
-    wsUrl = 'wss://micstach-2do.herokuapp.com';
+    wsUrl = 'wss://videochat-micstach.herokuapp.com';
   }
   res.render('index', {webSocketUrl: wsUrl});
 });
