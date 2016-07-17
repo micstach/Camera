@@ -18,6 +18,7 @@ var playSound = function() {
   if (playing) return ;
 
   var buf = soundBuffer.join(',');
+  soundBuffer = [];
 
   if (!buf) return ;
   
