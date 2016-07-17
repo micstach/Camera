@@ -51,10 +51,13 @@ function initializeRecorder(stream) {
   var audioInput = audioContext.createMediaStreamSource(stream);
   micGain = audioContext.createGain();
   //micGain.gain.value = 0.5;
+  
   // create a javascript node
   recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
+  
   // specify the processing function
   recorder.onaudioprocess = recorderProcess;
+  
   // connect stream to our recorder
   audioInput.connect(micGain);
   micGain.connect(recorder);
