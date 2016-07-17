@@ -44,6 +44,7 @@ var playSound = function() {
   };
   playing = true;
   source.start();
+  playing = false;
 }
 
 function convertFloat32ToInt16(buffer) {
