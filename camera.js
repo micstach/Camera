@@ -4,11 +4,11 @@ var connection = null;
 // audio context
 var bufferSize = 4096;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/4);
+var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/16);
 
 function convertFloat32ToInt16(buffer) {
   l = buffer.length;
-  buf = new Int16Array(l/4);
+  buf = new Int16Array(l/16);
   var k=0;
   for (var i=0; i<l; i+=4) {
     buf[k] = buffer[i] * 8000;
@@ -31,6 +31,9 @@ function recorderProcess(e) {
   var left = e.inputBuffer.getChannelData(0);
   var buf = convertFloat32ToInt16(left);
   var text = buf.join(',');
+  
+  $('#data-audio-size').text(text.length);
+
   var data = JSON.stringify({audio: text});
   
   connection.send(data);
@@ -106,7 +109,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
 		var currentValue = parseInt(0 + $('#data-size').text()) ;
 
-		$('#data-size').text((unbased.length + currentValue)/2);
+		$('#data-video-size').text((unbased.length + currentValue)/2);
 
     connection.send(JSON.stringify({video: unbased}));
 

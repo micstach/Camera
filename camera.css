@@ -18,10 +18,21 @@ body {
 }
 
 #data-size {
-  color: gray;
   float: right;
+}
+
+#data-video-size {
+  color: gray;
   font-family: Arial;
   font-size: 9px;
+  text-align: right;
+}
+
+#data-audio-size {
+  color: gray;
+  font-family: Arial;
+  font-size: 9px;
+  text-align: right;
 }
 
 #output {
