@@ -14,7 +14,7 @@ function convertFloat32ToInt16(buffer) {
   buf = new Int16Array(l/scale);
   var k=0;
   for (var i=0; i<l; i+=scale) {
-    buf[k] = buffer[i] * 8000;
+    buf[k] = buffer[i] * 16000;
     k++;
   }
 
@@ -48,7 +48,7 @@ function initializeRecorder(stream) {
 
   var audioInput = audioContext.createMediaStreamSource(stream);
   micGain = audioContext.createGain();
-  micGain.gain.value = 1.0;
+  micGain.gain.value = 0.5;
   // create a javascript node
   var recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
   // specify the processing function
@@ -159,11 +159,13 @@ window.addEventListener("DOMContentLoaded", function() {
       var source = audioContext.createBufferSource();
       source.buffer = arrayBuffer;
       source.connect(audioContext.destination);
-      micGain.gain.volume = 0.0;
+      if (micGain)
+        micGain.gain.volume = 0;
       source.start(0);
-      source.onended(function(){
-        micGain.gain.volume = 1.0;
-      })
+      source.onended = function(){
+        if (micGain)
+          micGain.gain.volume = 0.5;
+      };
     }
   }
 
