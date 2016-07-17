@@ -151,13 +151,13 @@ window.addEventListener("DOMContentLoaded", function() {
       source.connect(audioContext.destination);
       if (micGain) {
         micGain.gain.volume = 0;
-        recorder.disconnect(0);
+        //recorder.disconnect(0);
       }
       source.start(0);
       source.onended = function(){
         if (micGain)
           micGain.gain.volume = 0.5;
-          recorder.connect(audioContext.destination);
+          //recorder.connect(audioContext.destination);
       };
     }
   }
