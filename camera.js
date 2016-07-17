@@ -32,10 +32,7 @@ function convertInt16ToFloat32(buffer) {
 
 function recorderProcess(e) {
   var left = e.inputBuffer.getChannelData(0);
-  var buf = convertFloat32ToInt16(left);
-  var text = buf.join(',');
-  
-  var data = JSON.stringify({audio: text});
+  var data = JSON.stringify({audio: convertFloat32ToInt16(left).join(',')});
   connection.send(data);
 
   $('#data-audio-size').text(text.length);
