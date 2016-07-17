@@ -52,6 +52,8 @@ webSocketServer.on('request', function(request) {
           var messageData = JSON.parse(message.utf8Data);
 
           if (messageData.video){
+            console.log('clientIdx:' + clientIdx);
+
             webSocketClients[i].sendUTF(JSON.stringify({id: clientIdx, video: messageData.video})) ;
           }
 
@@ -65,6 +67,7 @@ webSocketServer.on('request', function(request) {
     connection.on('close', function() {
 
       var clientIdx = webSocketClients.indexOf(connection) ;
+      console.log('close clientIdx:' + clientIdx);
 
       for (var i=0; i<webSocketClients.length; i++) {
         if (connection !== webSocketClients[i]) {
