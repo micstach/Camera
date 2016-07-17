@@ -14,7 +14,7 @@ function convertFloat32ToInt16(buffer) {
   buf = new Int16Array(l/scale);
   var k=0;
   for (var i=0; i<l; i+=scale) {
-    buf[k] = buffer[i] * 16000;
+    buf[k] = buffer[i] * 256;
     k++;
   }
 
@@ -25,7 +25,7 @@ function convertInt16ToFloat32(buffer) {
   l = buffer.length;
   buf = new Float32Array(l);
   while (l--) {
-    buf[l] = parseFloat(buffer[l]) / 32000.0;
+    buf[l] = parseFloat(buffer[l]) / 512;
   }
   return buf;
 }
@@ -126,31 +126,22 @@ window.addEventListener("DOMContentLoaded", function() {
   var connectionRecieveMessage = function(message) {
     var messageData = JSON.parse(message.data);
 
-    //console.log('messageData:' + messageData);
-    //console.log('messageData.video:' + ((messageData.video !== undefined) ? messageData.video.length : 'undefined'));
-
     if (messageData.video !== undefined) {
-
       if (messageData.video.length > 0) {
         var $output = $("#output");
-
         var videoMessage = $("#video-" + messageData.id);
         if (videoMessage.length === 0) {
           var $img = $('<img width="960" height="720"></img>');
           $img.attr('id', "video-" + messageData.id);
           $output.append($img);
         } 
-
         $("#video-" + messageData.id).attr('src', "data:image/jpeg;base64, " + btoa(messageData.video));
       } else {
-        console.log('video length 0');
-
         $("#video-" + messageData.id).remove();
       }
     } else if (messageData.audio !== undefined) {
       var buf = messageData.audio.split(',');
       var audioFrame = convertInt16ToFloat32(buf);
-
       var channelData = arrayBuffer.getChannelData(0);
       for (var i=0; i<audioFrame.length; i++) {
         channelData[i] = audioFrame[i];
