@@ -2,10 +2,10 @@
 var connection = null;
 
 // audio context
-var bufferSize = 1024;
+var bufferSize = 512;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-var scale = 2 ;
+var scale = 1 ;
 var micGain = null ;
 var recorder ;
 
@@ -13,7 +13,7 @@ var soundBuffer = [] ;
 var playing = false ;
 
 var playSound = function() {
-  //if (playing) return ;
+  if (playing) return ;
 
   var buf = soundBuffer.join(',');
   soundBuffer = [];
@@ -37,7 +37,7 @@ var playSound = function() {
     playing = false;
   };
 
-  //playing = true;
+  playing = true;
   source.start(0);
 }
 
