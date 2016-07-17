@@ -41,9 +41,11 @@ var playSound = function() {
   source.onended = function(){
     playing = false;
     playSound() ;
+    playing = false;
   };
   playing = true;
   source.start();
+  playing = false;
 }
 
 function convertFloat32ToInt16(buffer) {
