@@ -2,10 +2,10 @@
 var connection = null;
 
 // audio context
-var bufferSize = 8192;
+var bufferSize = 4096;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-var scale = 1 ;
+var scale = 2 ;
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/scale);
 var micGain = null ;
 var recorder ;
@@ -155,7 +155,10 @@ window.addEventListener("DOMContentLoaded", function() {
       source.onended = function(){
         if (micGain)
           micGain.gain.volume = 0.5;
+
+        console.log('play ended');
       };
+      console.log('play started');
       source.start(0);
     }
   }
