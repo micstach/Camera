@@ -10,6 +10,42 @@ var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRa
 var micGain = null ;
 var recorder ;
 
+
+var soundBuffer = [] ;
+var playing = false ;
+
+var playSound = function() {
+  if (playing) return ;
+
+  var buf = soundBuffer.shift();
+
+  if (!buf) return ;
+  
+  var audioFrame = convertInt16ToFloat32(buf);
+  
+  var channelData = arrayBuffer.getChannelData(0);
+  
+  for (var i=0; i<audioFrame.length; i++) {
+    channelData[i] = audioFrame[i];
+  }
+
+  var source = audioContext.createBufferSource();
+  source.buffer = arrayBuffer;
+  
+  //recorder.disonnect(0);//audioContext.destination);
+
+  source.connect(audioContext.destination);
+  //if (micGain) {
+    //micGain.gain.value = 0;
+  //}
+  source.onended = function(){
+    playing = false;
+    playSound() ;
+  };
+  playing = true;
+  source.start();
+}
+
 function convertFloat32ToInt16(buffer) {
   l = buffer.length;
   buf = new Int16Array(l/scale);
@@ -142,33 +178,10 @@ window.addEventListener("DOMContentLoaded", function() {
         $("#video-" + messageData.id).remove();
       }
     } else if (messageData.audio !== undefined) {
-      
-      var buf = messageData.audio.split(',');
-      
-      var audioFrame = convertInt16ToFloat32(buf);
-      
-      var channelData = arrayBuffer.getChannelData(0);
-      
-      for (var i=0; i<audioFrame.length; i++) {
-        channelData[i] = audioFrame[i];
-      }
 
-      var source = audioContext.createBufferSource();
-      source.buffer = arrayBuffer;
-      
-      //recorder.disonnect(0);//audioContext.destination);
-
-      source.connect(audioContext.destination);
-      //if (micGain) {
-        //micGain.gain.value = 0;
-      //}
-      source.onended = function(){
-        //if (micGain) {
-          //micGain.gain.value = 0.5;
-        //}
-        //recorder.connect(audioContext.destination);
-      };
-      source.start();
+      soundBuffer.push(messageData.audio);
+      playSound();
+       
     }
   }
 
