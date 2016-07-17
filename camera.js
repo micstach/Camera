@@ -57,7 +57,7 @@ function convertInt16ToFloat32(buffer) {
   l = buffer.length;
   buf = new Float32Array(l);
   while (l--) {
-    buf[l] = parseFloat(buffer[l]) / 8192;
+    buf[l] = parseFloat(buffer[l]) / 16384;
   }
   return buf;
 }
@@ -82,7 +82,7 @@ function recorderProcess(e) {
     };
     connection.send(JSON.stringify(data));
     $('#data-audio-size').text(data.audio.length);
-    
+
   } else {
     $('#data-audio-size').text('');
   }
