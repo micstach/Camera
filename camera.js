@@ -14,7 +14,7 @@ function convertFloat32ToInt16(buffer) {
   buf = new Int16Array(l/scale);
   var k=0;
   for (var i=0; i<l; i+=scale) {
-    buf[k] = buffer[i] * 1000;
+    buf[k] = buffer[i] * 8000;
     k++;
   }
 
