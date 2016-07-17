@@ -2,14 +2,12 @@
 var connection = null;
 
 // audio context
-var bufferSize = 2048;
+var bufferSize = 1024;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 var scale = 1 ;
-//var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/scale);
 var micGain = null ;
 var recorder ;
-
 
 var soundBuffer = [] ;
 var playing = false ;
@@ -33,16 +31,12 @@ var playSound = function() {
   var source = audioContext.createBufferSource();
   source.buffer = arrayBuffer;
   
-  //recorder.disonnect(0);//audioContext.destination);
-
   source.connect(audioContext.destination);
-  //if (micGain) {
-    //micGain.gain.value = 0;
-  //}
+
   source.onended = function(){
     playing = false;
-    //playSound() ;
   };
+
   playing = true;
   source.start();
 }
