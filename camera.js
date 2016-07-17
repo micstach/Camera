@@ -2,11 +2,11 @@
 var connection = null;
 
 // audio context
-var bufferSize = 256;
+var bufferSize = 2048;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-var scale = 2 ;
-var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/scale);
+var scale = 1 ;
+//var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/scale);
 var micGain = null ;
 var recorder ;
 
@@ -23,7 +23,7 @@ var playSound = function() {
   if (!buf) return ;
   
   var audioFrame = convertInt16ToFloat32(buf.split(','));
-  
+  var arrayBuffer = audioContext.createBuffer(1, audioFrame.length, audioContext.sampleRate/scale)
   var channelData = arrayBuffer.getChannelData(0);
   
   for (var i=0; i<audioFrame.length; i++) {
