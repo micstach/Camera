@@ -8,6 +8,7 @@ var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var scale = 2 ;
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/scale);
 var micGain = null ;
+var recorder ;
 
 function convertFloat32ToInt16(buffer) {
   l = buffer.length;
@@ -51,7 +52,7 @@ function initializeRecorder(stream) {
   micGain = audioContext.createGain();
   micGain.gain.value = 0.5;
   // create a javascript node
-  var recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
+  recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
   // specify the processing function
   recorder.onaudioprocess = recorderProcess;
   // connect stream to our recorder
@@ -79,9 +80,6 @@ window.addEventListener("DOMContentLoaded", function() {
   var errBack = function(error) {
     console.log("Video capture error: ", error.code); 
   };
-
-  //canvas.getContext("2d").translate(160, 0);
-  //canvas.getContext("2d").scale(-1, 1);
 
   // Put video listeners into place
   if(navigator.getUserMedia) { // Standard
@@ -136,7 +134,7 @@ window.addEventListener("DOMContentLoaded", function() {
           $img.attr('id', "video-" + messageData.id);
           $output.append($img);
         } 
-        $("#video-" + messageData.id).attr('src', "data:image/jpeg;base64, " + btoa(messageData.video));
+        $("#video-" + messageData.id).attr('src', "data:image/jpeg;base64," + btoa(messageData.video));
       } else {
         $("#video-" + messageData.id).remove();
       }
@@ -151,12 +149,15 @@ window.addEventListener("DOMContentLoaded", function() {
       var source = audioContext.createBufferSource();
       source.buffer = arrayBuffer;
       source.connect(audioContext.destination);
-      if (micGain)
+      if (micGain) {
         micGain.gain.volume = 0;
+        recorder.disconnect(0);
+      }
       source.start(0);
       source.onended = function(){
         if (micGain)
           micGain.gain.volume = 0.5;
+          recorder.connect(audioContext.destination);
       };
     }
   }
