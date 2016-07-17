@@ -155,10 +155,7 @@ window.addEventListener("DOMContentLoaded", function() {
       source.onended = function(){
         if (micGain)
           micGain.gain.volume = 0.5;
-
-        console.log('play ended');
       };
-      console.log('play started');
       source.start(0);
     }
   }
