@@ -7,6 +7,7 @@ var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 var scale = 2 ;
 var arrayBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate/scale);
+var micGain = null ;
 
 function convertFloat32ToInt16(buffer) {
   l = buffer.length;
@@ -46,15 +47,15 @@ function initializeRecorder(stream) {
   video.play();
 
   var audioInput = audioContext.createMediaStreamSource(stream);
-  var gainNode = audioContext.createGain();
-  gainNode.volume = 0.1;
+  micGain = audioContext.createGain();
+  micGain.gain.value = 1.0;
   // create a javascript node
   var recorder = audioContext.createScriptProcessor(bufferSize, 1, 1);
   // specify the processing function
   recorder.onaudioprocess = recorderProcess;
   // connect stream to our recorder
-  audioInput.connect(gainNode);
-  gainNode.connect(recorder);
+  audioInput.connect(micGain);
+  micGain.connect(recorder);
   recorder.connect(audioContext.destination);
 }
 
@@ -158,7 +159,11 @@ window.addEventListener("DOMContentLoaded", function() {
       var source = audioContext.createBufferSource();
       source.buffer = arrayBuffer;
       source.connect(audioContext.destination);
+      micGain.gain.volume = 0.0;
       source.start(0);
+      source.onended(function(){
+        micGain.gain.volume = 1.0;
+      })
     }
   }
 
