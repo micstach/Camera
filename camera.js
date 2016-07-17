@@ -38,7 +38,7 @@ function recorderProcess(e) {
     audio: convertFloat32ToInt16(left).join(',')
   };
 
-  connection.send(JSON.stringify(data));
+  //connection.send(JSON.stringify(data));
 
   $('#data-audio-size').text(data.audio.length);
 }
