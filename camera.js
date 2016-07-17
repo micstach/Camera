@@ -17,7 +17,7 @@ var playing = false ;
 var playSound = function() {
   if (playing) return ;
 
-  var buf = soundBuffer.shift();
+  var buf = soundBuffer.join(',');
 
   if (!buf) return ;
   
@@ -44,7 +44,6 @@ var playSound = function() {
   };
   playing = true;
   source.start();
-  playing = false;
 }
 
 function convertFloat32ToInt16(buffer) {
