@@ -142,15 +142,22 @@ window.addEventListener("DOMContentLoaded", function() {
         $("#video-" + messageData.id).remove();
       }
     } else if (messageData.audio !== undefined) {
+      
       var buf = messageData.audio.split(',');
+      
       var audioFrame = convertInt16ToFloat32(buf);
+      
       var channelData = arrayBuffer.getChannelData(0);
+      
       for (var i=0; i<audioFrame.length; i++) {
         channelData[i] = audioFrame[i];
       }
 
       var source = audioContext.createBufferSource();
       source.buffer = arrayBuffer;
+      
+      recorder.disonnect(0);//audioContext.destination);
+
       source.connect(audioContext.destination);
       //if (micGain) {
         //micGain.gain.value = 0;
@@ -159,6 +166,7 @@ window.addEventListener("DOMContentLoaded", function() {
         //if (micGain) {
           //micGain.gain.value = 0.5;
         //}
+        recorder.connect(audioContext.destination);
       };
       source.start(0);
     }
