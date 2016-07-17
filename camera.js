@@ -2,7 +2,7 @@
 var connection = null;
 
 // audio context
-var bufferSize = 16096;
+var bufferSize = 16384;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 var scale = 2 ;
