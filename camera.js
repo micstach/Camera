@@ -2,7 +2,7 @@
 var connection = null;
 
 // audio context
-var bufferSize = 4096;
+var bufferSize = 1024;
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 var scale = 1 ;
@@ -35,6 +35,7 @@ var playSound = function() {
 
   source.onended = function(){
     playing = false;
+    playSound();
   };
 
   playing = true;
@@ -63,31 +64,31 @@ function convertInt16ToFloat32(buffer) {
 }
 
 function recorderProcess(e) {
-  if (playing) return ;
+  //if (playing) return ;
 
   var left = e.inputBuffer.getChannelData(0);
 
   var intArr = convertFloat32ToInt16(left);
 
-  var send = false ;
-  for (var i=0; i<intArr.length; i++) {
-    send = (intArr[i] > 0) ;
+  // var send = false ;
+  // for (var i=0; i<intArr.length; i++) {
+  //   send = (intArr[i] > 0) ;
 
-    if (send) {
-      break;
-    }
-  }
+  //   if (send) {
+  //     break;
+  //   }
+  // }
 
-  if (send) {
-    var data = {
-      audio: intArr.join(',')
-    };
-    connection.send(JSON.stringify(data));
-    $('#data-audio-size').text(data.audio.length);
+  // if (send) {
+    // var data = {
+    //   audio: intArr.join(',')
+    // };
+    // connection.send(JSON.stringify(data));
+    //$('#data-audio-size').text(data.audio.length);
 
-  } else {
-    $('#data-audio-size').text('');
-  }
+  // } else {
+  //   $('#data-audio-size').text('');
+  // }
 }
 
 function initializeRecorder(stream) {
@@ -120,7 +121,8 @@ window.addEventListener("DOMContentLoaded", function() {
   var video = document.getElementById("video");
 
   var videoObj = {
-    "video": true
+    "video": true,
+    "audio": true
   };
 
   var errBack = function(error) {
@@ -141,10 +143,7 @@ window.addEventListener("DOMContentLoaded", function() {
     navigator.webkitGetUserMedia(session, initializeRecorder, onError);
   }
   else if(navigator.mozGetUserMedia) { // Firefox-prefixed
-    navigator.mozGetUserMedia(videoObj, function(stream){
-      video.src = window.URL.createObjectURL(stream);
-      video.play();
-    }, errBack);
+    navigator.mozGetUserMedia(videoObj, initializeRecorder, errBack);
   }
 
   var captureImageLoop = function() {

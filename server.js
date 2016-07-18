@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname));
 
 app.get('/', function(req, res){
-  var wsUrl = 'ws://localhost';
+  var wsUrl = 'ws://192.168.0.109';
   if (process.env.PORT) {
     wsUrl = 'wss://videochat-micstach.herokuapp.com';
   }
@@ -37,7 +37,7 @@ webSocketServer.on('request', function(request) {
     // client is connecting from your website
     // (http://en.wikipedia.org/wiki/Same_origin_policy)
     var connection = request.accept(null, request.origin); 
-
+    console.log(JSON.stringify(connection.remoteAddress));
     // we need to know client index to remove them on 'close' event
     var index = webSocketClients.push(connection) - 1;
 
